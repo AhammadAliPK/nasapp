@@ -34,11 +34,17 @@ app.get("/slotinfo/:ref", (req, res, next) => {
         return res.status(200).json({
           carName: parkingList[slotId],
           slotNumber: slotId,
+          status: "success",
         });
       } else {
-        return res.status(200).json("this slot is empty");
+        return res
+          .status(200)
+          .json({ status: "fail", message: "this slot is empty" });
       }
-    } else return res.status(200).json("unknown slot number");
+    } else
+      return res
+        .status(200)
+        .json({ status: "fail", message: "unknown slot number" });
   }
   // by car name
   else {
@@ -48,13 +54,14 @@ app.get("/slotinfo/:ref", (req, res, next) => {
       return res.status(200).json({
         carName: parkingList[pos],
         slotNumber: pos,
+        status: "success",
       });
     } else {
-      return res
-        .status(200)
-        .json(
-          "unknown car, please provide either valid slot number or car number"
-        );
+      return res.status(200).json({
+        status: "fail",
+        message:
+          "unknown car, please provide either valid slot number or car number",
+      });
     }
   }
 });
@@ -71,7 +78,13 @@ app.post("/parkcar", (req, res, next) => {
       parkingList[slotId] = car;
 
       availableSlot--;
-      return res.send("car parked at slot number " + slotId);
+
+      return res.status(200).json({
+        status: "success",
+        slotNumber: slotId,
+        message: "parked",
+      });
+      // return res.send("car parked at slot number " + slotId);
     } else return res.send("Sorry ,parking is full");
   } catch {
     return res.send("something went wrong");
@@ -88,25 +101,13 @@ app.delete("/unpark/:slotid", (req, res, next) => {
   if (id && id < parkingSlotMax) {
     parkingList[id] = undefined;
     availableSlot++;
-    res.status(200).json("Succesfull unparked your car from " + id);
+    res.status(200).json({
+      status: "success",
+      message: "Succesfully unparked your car",
+    });
   } else return res.status(200).json("please provide a valid slot number");
 });
 
-// testing only
-app.get("/parkinglist", (req, res, next) => {
-  return res.status(200).json(parkingList);
-});
 
-app.get("/car", (req, res, nex) => {
-  let car = new Car("a", 10);
-  let slot = car.carName;
-  return res.send("from api" + slot);
-});
 
-app.get("/maxslot", (req, res, next) => {
-  return res.send("max slot avail " + parkingSlotMax);
-});
-
-app.get("/slotleft", (req, res, next) => {
-  return res.send("slot left " + availableSlot);
-});
+module.exports = app;
