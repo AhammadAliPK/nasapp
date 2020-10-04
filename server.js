@@ -99,15 +99,20 @@ app.delete("/unpark/:slotid", (req, res, next) => {
   let id = req.params.slotid;
 
   if (id && id < parkingSlotMax) {
-    parkingList[id] = undefined;
-    availableSlot++;
-    res.status(200).json({
-      status: "success",
-      message: "Succesfully unparked your car",
-    });
+    if (parkingList[id] != undefined) {
+      parkingList[id] = undefined;
+      availableSlot++;
+      res.status(200).json({
+        status: "success",
+        message: "Succesfully unparked your car",
+      });
+    } else {
+      res.status(200).json({
+        status: "fail",
+        message: "cannot unpark a car which is not parked yet",
+      });
+    }
   } else return res.status(200).json("please provide a valid slot number");
 });
-
-
 
 module.exports = app;
