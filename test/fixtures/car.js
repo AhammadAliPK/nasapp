@@ -1,5 +1,5 @@
 const car = {
-  car: "benz",
+  car: "RL3232",
 };
 
 module.exports = car;

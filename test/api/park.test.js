@@ -20,7 +20,7 @@ describe("Server!", () => {
       });
   });
 
-  it("get parking info", (done) => {
+  it("get parking information", (done) => {
     chai
       .request(app)
       .get("/slotinfo/0")
@@ -32,7 +32,7 @@ describe("Server!", () => {
       });
   });
 
-  it("un park", (done) => {
+  it("unparking car with slot number 0", (done) => {
     chai
       .request(app)
       .delete("/unpark/0")

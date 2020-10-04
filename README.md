@@ -27,7 +27,6 @@ npm run devserver
 
 The API runs on port ````4000```` by default, and the root can be accessed by navigating to ````http://localhost:4000/````  in your browser.
 
-````
 
 ### Running in production
 
@@ -37,7 +36,7 @@ npm run startserver
 
 
 ### Author
-[Ahammad Ali](https://github.com/AhammadAliPK).
+[Ahammad Ali](https://github.com/AhammadAliPK)
 
 
 
